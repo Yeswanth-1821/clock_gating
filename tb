@@ -1,0 +1,19 @@
+// Code your testbench here
+// or browse Examples
+`timescale 1ns/1ps
+module tb_clock_gating;
+    reg clk = 0, enable = 0, rst = 0;
+    wire gated_clk;
+
+    clock_gating uut (.clk(clk), .enable(enable), .rst(rst), .gated_clk(gated_clk));
+    always #5 clk = ~clk;
+
+    initial begin
+        $dumpfile("clk_gate.vcd"); $dumpvars(0, tb_clock_gating);
+        rst = 1; #10; rst = 0;
+        #10 enable = 1;
+        #30 enable = 0;
+        #20 enable = 1;
+        #50 $finish;
+    end
+endmodule

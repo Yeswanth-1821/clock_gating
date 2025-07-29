@@ -1,0 +1,15 @@
+// Code your design here
+module clock_gating (
+    input clk,
+    input enable,
+    input rst,
+    output gated_clk
+);
+    reg en_ff;
+    always @(posedge clk or posedge rst) begin
+        if (rst) en_ff <= 0;
+        else en_ff <= enable;
+    end
+
+    assign gated_clk = clk & en_ff;
+endmodule
